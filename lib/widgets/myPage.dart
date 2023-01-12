@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sleep_ugrp/widgets/Login.dart';
 
 class MyPage extends StatelessWidget {
   @override
@@ -10,7 +12,7 @@ class MyPage extends StatelessWidget {
           title: Text('This is MyPage'),
         ),
         body: Center(
-          child: Text('Hello myPage'),
+          child: Login(),
         ),
       ),
     );

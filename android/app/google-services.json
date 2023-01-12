@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "706354246136",
+    "project_id": "psqi-b1d21",
+    "storage_bucket": "psqi-b1d21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706354246136:android:87c39468568a5c2172260d",
+        "android_client_info": {
+          "package_name": "com.example.sleep_ugrp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "706354246136-hs7snv20f6i04srjm7vsllire2hricgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAXDe2cqPry98z9TNWCIKJV9xz0agsHyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "706354246136-hs7snv20f6i04srjm7vsllire2hricgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
