@@ -4,26 +4,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
-class Login extends StatelessWidget {
+class Login extends StatefulWidget{
+  _Login createState()=>_Login();
+}
+int hours=0;
+int minutes=0;
+class _Login extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: ElevatedButton(
-            onPressed: ClockTimeNotification,
-            child:Text('Show Notification'),
+        resizeToAvoidBottomInset : false,
+        body:GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: ()=>ClockTimeNotification(hours,minutes),
+                  child:Text('Show Notification'),
+                ),
+                Padding(
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    onChanged:(text){
+                      setState((){
+                        hours=int.parse(text);;
+                        print(hours+minutes);
+                        ClockTimeNotification(hours,minutes);
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: '시간 ex)18시',
+                    ),
+                  ),
+                  padding: EdgeInsets.all(20.0),
+                ),
+                Padding(
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    onChanged:(text){
+                      setState((){
+                        minutes=int.parse(text);;
+                        print(hours);
+                        print(minutes);
+                        ClockTimeNotification(hours,minutes);
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: '분',
+                    ),
+                  ),
+                  padding: EdgeInsets.all(20.0),
+                ),
+              ]
           ),
         ),
+      ),
       ),
     );
   }
 }
-Future ClockTimeNotification() async {
-  final notiTitle = 'title'; //알람 제목
-  final notiDesc = 'description'; //알람 내용
+
+Future ClockTimeNotification(int hours,int minutes) async {
+  final notiTitle = 'PSQI/데일리'; //알람 제목
+  final notiDesc = '설문을 할 시간입니다'; //알람 내용
   final result;//권한 확인을 위한 변수
+
   //----------------------------------------------------------------------------------
   //local notification 플러그인 객체 생성
   const AndroidInitializationSettings initializationSettingsAndroid =
@@ -59,7 +106,7 @@ Future ClockTimeNotification() async {
       0, // 스케줄 ID(고유)
       notiTitle, //알람 제목
       notiDesc, //알람 내용
-      _setNotiTime(), //알람 시간
+      _setNotiTime(hours,minutes), //알람 시간
       detail,
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
@@ -72,11 +119,12 @@ Future ClockTimeNotification() async {
 }
 
 //알람 시간 세팅
-tz.TZDateTime _setNotiTime() {
+tz.TZDateTime _setNotiTime(int hours,int minutes){
+
   tz.initializeTimeZones();//TimeZone Database 초기화
   tz.setLocalLocation(tz.getLocation('Asia/Seoul'));//TimeZone 설정(외국은 다르게!)
   final now = tz.TZDateTime.now(tz.local);
-  var scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, 5, 12);//알람 시간
+  var scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hours, minutes);//알람 시간
   //var test = tz.TZDateTime.now(tz.local).add(const Duration (seconds: 5));
   print('-----------알람 시간 체크----${scheduledDate.toString()}');
   return scheduledDate;
